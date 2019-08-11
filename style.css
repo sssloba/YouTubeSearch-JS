@@ -85,3 +85,9 @@ main,
 	font-size: 14px;
 	color: #999;
 }
+
+span {
+	display: block;
+	height: 130px;
+	overflow: hidden;
+}

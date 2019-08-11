@@ -20,6 +20,22 @@ function getVideos(searchTerm) {
 	videosRequest.send();
 }
 
+function relatedVideos(videoId) {
+	var videosRequest = new XMLHttpRequest();
+	var url ="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&relatedToVideoId="+ videoId + "&type=video&key=" + key;
+
+	videosRequest.open("GET", url);
+
+	videosRequest.onload = function() {
+		var videos = JSON.parse(videosRequest.responseText).items;
+		console.log(videos);
+
+		listVideos(videos);
+	};
+
+		videosRequest.send();
+}
+
 function listVideos(videos) {
 	videoList.innerHTML = "";
 
@@ -70,23 +86,7 @@ function playVideo(e) {
 
 	video.innerHTML = '<iframe width="100%" height="550" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
 
-	function relatedVideos() {
-	var videosRequest = new XMLHttpRequest();
-	var url ="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=6&relatedToVideoId="+ videoId + "&type=video&key=" + key;
-
-	videosRequest.open("GET", url);
-
-	videosRequest.onload = function() {
-		var videos = JSON.parse(videosRequest.responseText).items;
-		console.log(videos);
-
-		listVideos(videos);
-	};
-
-		videosRequest.send();
-	}
-
-	relatedVideos();
+	relatedVideos(videoId);
 
 }
 
